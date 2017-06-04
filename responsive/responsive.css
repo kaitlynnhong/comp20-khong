@@ -1,3 +1,4 @@
+/*
 @media screen 
     and (min-device-width: 1200px){
         .software{ 
@@ -6,6 +7,7 @@
             background: url("software.png") 0px 0px;
         }
 }
+*/
 
 @media screen 
     and (min-device-width: 1100px)
