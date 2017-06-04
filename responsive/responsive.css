@@ -16,10 +16,8 @@ div.software{
     and (min-width: 1100px)
     and (max-width: 1200px){
         div.software{ 
-            width: 138px;
-            height: 250px;
-            /*width: 128px; 
-            height: 240px;*/
+            width: 128px; 
+            height: 240px;
             background: url(software.png) 128px 0px;
         }
 }
@@ -28,10 +26,8 @@ div.software{
     and (min-width: 1000px)
     and (max-width: 1100px){
         div.software{ 
-            width: 138px; 
-            height: 250px;
-             /*width: 128px; 
-            height: 240px;*/
+            width: 128px; 
+            height: 240px;
             background: url(software.png) 256px 0px;
         }
 }
@@ -40,10 +36,8 @@ div.software{
     and (min-width: 900px)
     and (max-width: 1000px){
         div.software{ 
-            width: 138px; 
-            height: 250px;
-             /*width: 128px; 
-            height: 240px;*/
+            width: 128px; 
+            height: 240px;
             background: url(software.png) 384px 0px;
         }
 }
@@ -52,10 +46,8 @@ div.software{
     and (min-width: 800px)
     and (max-width: 900px){
         div.software{ 
-            width: 138px; 
-            height: 250px;
-             /*width: 128px; 
-            height: 240px;*/
+            width: 128px; 
+            height: 240px;
             background: url(software.png) 512px 0px;
         }
 }
@@ -64,10 +56,8 @@ div.software{
     and (min-width: 700px)
     and (max-width: 800px){
         div.software{ 
-            width: 138px; 
-            height: 250px;
-             /*width: 128px; 
-            height: 240px;*/
+            width: 128px; 
+            height: 240px;
             background: url(software.png) 0px -240px;
         }
 }
@@ -76,10 +66,8 @@ div.software{
     and (min-width: 600px)
     and (max-width: 700px){
         div.software{ 
-            width: 138px; 
-            height: 250px;
-             /*width: 128px; 
-            height: 240px;*/
+            width: 128px; 
+            height: 240px;
             background: url(software.png) 128px -240px;
         }
 }
@@ -88,10 +76,8 @@ div.software{
     and (min-width: 500px)
     and (max-width: 600px){
         div.software{ 
-            width: 138px; 
-            height: 250px;
-             /*width: 128px; 
-            height: 240px;*/
+            width: 128px; 
+            height: 240px;
             background: url(software.png) 256px -240px;
         }
 }
@@ -100,10 +86,8 @@ div.software{
     and (min-width: 400px)
     and (max-width: 500px){
        div.software{ 
-            width: 138px; 
-            height: 250px;
-             /*width: 128px; 
-            height: 240px;*/
+            width: 128px; 
+            height: 240px;
             background: url(software.png) 384px -240px;
         }
 }
@@ -111,10 +95,8 @@ div.software{
 @media only screen 
     and (max-width: 400px){
         .software{ 
-            width: 138px; 
-            height: 250px;
-             /*width: 128px; 
-            height: 240px;*/
+            width: 128px; 
+            height: 240px;
             background: url(software.png) 512px -240px;
         }
     }
