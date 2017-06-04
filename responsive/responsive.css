@@ -4,7 +4,7 @@ div.software{
 }
 
 @media only screen 
-    and (min-width: 1200px){
+    and (min-width: 1201px){
         div.software{ 
             width: 128px; 
             height: 240px;
@@ -94,9 +94,9 @@ div.software{
 
 @media only screen 
     and (max-width: 400px){
-        .software{ 
+       div.software{ 
             width: 128px; 
             height: 240px;
             background: url(software.png) -512px 240px;
         }
-    }
+}
