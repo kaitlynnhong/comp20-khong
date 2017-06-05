@@ -1,14 +1,16 @@
+/*display top left image*/
 @media only screen 
-    and (min-width: 1201px){
+    and (min-width: 1201px){    /*ensures minimum >1200px not >=1200px*/
         div.software{ 
-            width: 128px; 
-            height: 240px;
+            width: 128px;   /*640px/5 images*/
+            height: 240px;  /*480px/2 images*/
             background: url(software.png) 0px 0px;
         }
     }
 
+/*display second image top row*/
 @media only screen 
-    and (min-width: 1101px)
+    and (min-width: 1101px)     
     and (max-width: 1200px){
         div.software{ 
             width: 128px; 
@@ -17,6 +19,7 @@
         }
 }
 
+/*display third image top row*/
 @media only screen 
     and (min-width: 1001px)
     and (max-width: 1100px){
@@ -27,6 +30,7 @@
         }
 }
 
+/*display fourth image top row*/
 @media only screen 
     and (min-width: 901px)
     and (max-width: 1000px){
@@ -37,6 +41,7 @@
         }
 }
 
+/*display fifth image top row*/
 @media only screen 
     and (min-width: 801px)
     and (max-width: 900px){
@@ -47,6 +52,7 @@
         }
 }
 
+/*display first image start at the left in bottom row*/
 @media only screen 
     and (min-width: 701px)
     and (max-width: 800px){
@@ -57,6 +63,7 @@
         }
 }
 
+/*display second image bottom row*/
 @media only screen 
     and (min-width: 601px)
     and (max-width: 700px){
@@ -67,6 +74,7 @@
         }
 }
 
+/*display third image bottom row*/
 @media only screen 
     and (min-width: 501px)
     and (max-width: 600px){
@@ -77,6 +85,7 @@
         }
 }
 
+/*display fourth image bottom row*/
 @media only screen 
     and (min-width: 401px)
     and (max-width: 500px){
@@ -87,8 +96,9 @@
         }
 }
 
+/*display fifth image bottom row*/
 @media only screen 
-    and (max-width: 400px){
+    and (max-width: 400px){    
        div.software{ 
             width: 128px; 
             height: 240px;
