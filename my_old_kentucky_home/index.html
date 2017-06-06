@@ -14,7 +14,26 @@
 <div id="lyrics"></div>
 
 <script>
-	// Complete this section and create a CSS file named style.css
+    var music_video = document.getElementById("music_video");
+    var lyrics = document.getElementById("lyrics");
+
+    music_video.addEventListener("timeupdate", function(){
+
+        if (music_video.currentTime < 7) {
+            lyrics.innerHTML = "";
+        }
+        else if (music_video.currentTime > 7 && music_video.currentTime < 13) {
+            lyrics.innerHTML = "<p>The sun shines bright in my old Kentucky home,</p>";
+        }
+        else if (music_video.currentTime > 13 && music_video.currentTime < 15) {
+            lyrics.innerHTML = "<p>'Tis summer, <img src="summer_olaf.jpg" alt="summer_img"/></p>";
+        }
+        else if (music_video.currentTime > 15 && music_video.currentTime < 20) {
+            lyrics.innerHTML = "<p>the people are gay;</p>";
+        }
+        
+
+    })
 </script>
 </body>
 </html>
