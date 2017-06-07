@@ -1,6 +1,12 @@
-h1 {
+#title {
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 32px;
     color: #4d0026;
+    text-align: center;
+}
+
+#lyrics {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
     text-align: center;
 }
