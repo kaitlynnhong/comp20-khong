@@ -1,13 +1,13 @@
 #title {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 32px;
+    font-size: 24px;
     color: #4d0026;
     text-align: center;
 }
 
 #lyrics {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
 }
 
@@ -20,5 +20,5 @@
     display: block;
     margin: 0 auto;
     height: 250px;
-    width: 400px;
+    width: 350px;
 }
