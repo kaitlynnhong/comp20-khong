@@ -14,20 +14,21 @@
 <div id="lyrics"></div>
 
 <script>
+    //create elements in javascript to represent the music video and lyrics
     var music_video = document.getElementById("music_video");
     var lyrics = document.getElementById("lyrics");
 
+    //add event listener to keep track of video time
     music_video.addEventListener("timeupdate", function(){
-
-        if (music_video.currentTime < 7) {
-            lyrics.innerHTML = "";
-        }
-        else if (music_video.currentTime > 7 && music_video.currentTime < 14) {
+        
+        //if/else if/else statements check timeframe and insert corresponding lyric   
+        if (music_video.currentTime > 7 && music_video.currentTime < 14) {
+            //.innerHTML apend used to directly modify the html for id "lyrics"
             lyrics.innerHTML = "<p>The sun shines bright in my old Kentucky home,</p>";
         }
         else if (music_video.currentTime > 13 && music_video.currentTime < 16) {
-            lyrics.innerHTML = "<p>'Tis summer,</p>";
-            lyrics.innerHTML = '<p><img src="summer_olaf.jpg" alt="summer_img"/></p>';
+            lyrics.innerHTML = "<p>'Tis summer,</p>"
+            '<p><img class="image" src="olaf_summer.jpg" alt="summer_img"/></p>';
         }
         else if (music_video.currentTime > 15 && music_video.currentTime < 21) {
             lyrics.innerHTML = "<p>the people are gay;</p>";
@@ -41,18 +42,18 @@
         else if (music_video.currentTime > 34 && music_video.currentTime < 41) {
             lyrics.innerHTML = "<p>The young folks roll on the little cabin floor,";
         }
-        else if (music_video.currentTime > 40 && music_video.currentTime < 47) {
+        else if (music_video.currentTime > 40 && music_video.currentTime < 48) {
             lyrics.innerHTML = "<p>All merry, all happy and bright;</p>";
         }
-        else if (music_video.currentTime > 46 && music_video.currentTime < 55) {
+        else if (music_video.currentTime > 47 && music_video.currentTime < 55) {
             lyrics.innerHTML = "<p>By 'n' by hard times comes a knocking at the door,</p>";
         }
         else if (music_video.currentTime > 54 && music_video.currentTime < 59) {
             lyrics.innerHTML = "<p>Then My Old Kentucky Home, </p>";
         }
         else if (music_video.currentTime > 58 && music_video.currentTime < 63) {
-            lyrics.innerHTML = "<p>goodnight!</p>";
-            lyrics.innerHTML = '<p><img src="goodnight_corgi.jpg" alt="dog_sleep"/></p>';
+            lyrics.innerHTML = "<p>goodnight!</p>"
+            '<p><img class="image" src="goodnight_corgi.jpg" alt="dog_sleep"/></p>';
         }
         else if (music_video.currentTime > 62 && music_video.currentTime < 69) {
             lyrics.innerHTML = "<p>Chorus: Weep no more, my lady</p>";
