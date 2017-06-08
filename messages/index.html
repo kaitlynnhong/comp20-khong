@@ -6,13 +6,20 @@
   <meta charset="utf-8" />
   <title>Messages</title>
   <script>
-    function parse() {
-      jsonData = '[{"id":1,"content":"Do you really want to hurt me?","username":"Boy"},{"id":2,"content":"Do you really want to make me cry?","username":"George"}]';
-      var obj = JSON.parse(jsonDATA);
-      
-      document.getElementById("messages").innerHTML = obj.jsonDATA[0].content + " " + obj.jsonDATA[0].username +
-        "<br />" + obj.jsonDATA[1].content + " " + obj.jsonDATA[1].username;
-    }
+      function parse() {
+        var jsonData = '{"data":[{"id":1,"content":"Do you really want to hurt me?","username":"Boy"},{"id":2,"content":"Do you really want to make me cry?","username":"George"}]}';
+        //modified the jsonData...
+        var parse = JSON.parse(jsonData);
+        document.getElementById("messages").innerHTML = parse.data[0].content + "  " + parse.data[0].username 
+        + "<br/>" + parse.data[1].content + "  " + parse.data[1].username;
+
+        //var str = JSON.stringify(jsonDATA);
+        //var newjsonData = JSON.parse(str);
+
+        /*while (newjsonData.length > 0) {
+            document.write(newjsonData.pop() + "<br/>");           
+        }*/
+      }
   </script>
 </head>
 
