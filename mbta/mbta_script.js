@@ -1,24 +1,38 @@
-function render_map()
-{
-    var south_station = new google.maps.LatLng({lat: 42.351877600, lng: -71.055104200});
+var myLat = 0;
+var myLng = 0;
+var request = new XMLHttpRequest();
+var south_station = new google.maps.LatLng(myLat, myLng);
+var myOptions = {
+    zoom: 13, 
+	center: south_station,
+	mapTypeId: google.maps.MapTypeId.ROADMAP
+};
+			var map;
+			var marker;
+			var infowindow = new google.maps.InfoWindow();
+			
+			function init()
+			{
+				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                renderMap();
 
-    var options = {
-					zoom: 15,
-					center: south_station,
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-				};
-    
-    var map = new google.maps.Map(document.getElementById=("map_canvas"), options);
-    
-    var south_marker = new google.maps.Marker({
-        position: south_station,
-        title: "South Station, Boston, MA"
-    });
-    south_marker.setMap(map);
+			}
+			
+			function renderMap()
+			{
+				myLat = 42.351877600;
+                myLng = -71.055104200;
+                south_station = new google.maps.LatLng(myLat, myLng);
+				map.panTo(south_station);
+	
+				marker = new google.maps.Marker({
+					position: south_station,
+					title: "South Station, Boston, MA"
+				});
+				marker.setMap(map);
 
-    var infowindow = new google.maps.InfoWindow();
-    google.maps.event.addListener(south_marker, 'click', function() {
-        infowindow.setContent(south_marker.title);
-        infowindow.open(map, south_marker);
-    });
-}
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.setContent(marker.title);
+					infowindow.open(map, marker);
+				});
+			}
