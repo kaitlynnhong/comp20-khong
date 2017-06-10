@@ -1,6 +1,10 @@
 var myLat = 0;
 var myLng = 0;
 var request = new XMLHttpRequest();
+var image = {
+		url: 'http://www.jiekeyou.com/wp-content/uploads/2014/07/public-transport-icon.png',
+		scaledSize: new google.maps.Size(25,25)
+	};
 var south_station = new google.maps.LatLng(myLat, myLng);
 var red_stations = [
 	['Andrew Station', 42.330154, -71.057655, 21],
@@ -48,10 +52,11 @@ function renderMap()
     myLng = -71.05524200000001;
     south_station = new google.maps.LatLng(myLat, myLng);
 	map.panTo(south_station);
-	
+
 	var south_marker = new google.maps.Marker({
 		position: south_station,
-		title: "South Station, Boston, MA"
+		title: "South Station, Boston, MA",
+		icon: image
 	});
 	south_marker.setMap(map);
 
@@ -60,11 +65,19 @@ function renderMap()
 		infowindow.open(map, south_marker);
 	});
 
+	red_station_markers();
+	render_redline();
+}
+
+function red_station_markers() 
+{
 	var station_marker, i;
+
 	for (i = 0; i < red_stations.length; i++) {  
         station_marker = new google.maps.Marker({
         position: new google.maps.LatLng(red_stations[i][1], red_stations[i][2]),
-        map: map
+        map: map,
+		icon: image
     });
 
     	google.maps.event.addListener(station_marker, 'click', (function(station_marker, i) {
@@ -74,4 +87,16 @@ function renderMap()
         	}		
     	})(station_marker, i));
 	}
+}
+
+function render_redline()
+{
+	var redline = new google.maps.Polyline({
+		path: red_stations,
+		geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 3
+	});
+	redline.setMap(map);
 }
