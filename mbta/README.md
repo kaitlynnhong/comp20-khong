@@ -4,4 +4,4 @@ MBTA Lab 8
 3. I spent approximately 10 hours on this assignment.
 4. sources: 
 https://gist.github.com/parth1020/4481893 - simple multiple markers example from google 
-https://developers.google.com/maps/documentation/javascript/examples/polyline-simple - simple polylines example from google 
+https://stackoverflow.com/questions/3059044/google-maps-js-api-v3-simple-multiple-marker-example - simple polylines example from google 
