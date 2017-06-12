@@ -1,11 +1,17 @@
-var myLat = 0;
-var myLng = 0;
+var myLat = 0, myLng = 0;
 var request = new XMLHttpRequest();
+//image object for unique red line icon, sized appropriately
 var image = {
-		url: 'http://www.jiekeyou.com/wp-content/uploads/2014/07/public-transport-icon.png',
-		scaledSize: new google.maps.Size(25,25)
-	};
+	url: 'http://www.jiekeyou.com/wp-content/uploads/2014/07/public-transport-icon.png',
+	scaledSize: new google.maps.Size(25,25)
+};
+var image_2 = {
+	url: 'https://cdn0.iconfinder.com/data/icons/transport-14/512/Train_Red.png',
+	scaledSize: new google.maps.Size(25,25)
+};
+//created south_station object for center 
 var south_station = new google.maps.LatLng(myLat, myLng);
+//object containing array of other red stations
 var red_stations = [
 	['Andrew Station', 42.330154, -71.057655, 21],
 	['Porter Square', 42.3884, -71.11914899999999, 20],
@@ -29,23 +35,47 @@ var red_stations = [
 	['Central Square', 42.365486, -71.103802, 2],
 	['Braintree', 42.2078543, -71.0011385, 1]
 ]
+//object containing arrays of orange stations
+var orange_stations = [
+	['Oak Grove Station', 42.4353430165, -71.071189642, 19],
+	['Melden Center Station', 42.4273133438, -71.073871851, 18],
+	['Wellington Station', 42.4042955853, -71.0770046711, 17],
+	['Sullivan Square Station (Broadway Exit)', 42.3857548427, -71.0770707729, 16],
+	['Sullivan Square Station (Cambridge St Exit)', 42.3830128834, -71.0771012306, 15],
+	['Community College Station', 42.3716383181, -71.0702776909, 14],
+	['North Station', 42.365512, -71.061423, 13],
+	['Haymarket Station', 42.362498, -71.058996, 12],
+	['State Station', 42.358897, -71.057795, 11], 
+	['Chinatown Station', 42.352228, -71.062892, 10],
+	['Tufts Medical Center Station', 42.3498873, -71.063795, 9],
+	['Back Bay Station', 42.3472772215, -71.0760390759, 8],
+	['Massachusetts Avenue Station', 42.3415519196, -71.0832166672, 7],
+	['Ruggles Station', 42.3356674788, -71.0905230045, 6],
+	['Roxbury Crossing Station', 42.3315274209, -71.0954046249, 5],
+	['Jackson Square Station', 42.3227388088, -71.1000823975, 4],
+	['Stony Brook Station', 42.3192008078, -71.1028289795, 3],
+	['Green Street Station', 42.3105691548, -71.107313633, 2],
+	['Forest Hills Station', 42.300362, -71.113411, 1]
+]
 
 var myOptions = {
     zoom: 15, 
 	center: south_station,
 	mapTypeId: google.maps.MapTypeId.ROADMAP
 };
-
 var map;
 var infowindow = new google.maps.InfoWindow();
-			
+
+//function init()
+//purpose: generate new map object in the 'map_canvas' div using myOptions specifications		
 function init()
 {
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     renderMap();
 
 }
-			
+//function: renderMap()
+//purpose: creates center of map around marker at South Station	
 function renderMap()
 {
 	myLat = 42.352271;
@@ -69,6 +99,7 @@ function renderMap()
 	render_redline();
 }
 
+//function red_station_markers()
 function red_station_markers() 
 {
 	var station_marker, i;
@@ -89,6 +120,8 @@ function red_station_markers()
 	}
 }
 
+//function: render_redline()
+//renders red polyline following the red station coordinates
 function render_redline()
 {
 	var redline_coords = [
@@ -138,3 +171,25 @@ function render_redline()
 	});
 	redline_2.setMap(map);
 }
+
+function orange_station_markers() 
+{
+	var station_marker, i;
+
+	for (i = 0; i < orange_stations.length; i++) {  
+        station_marker = new google.maps.Marker({
+        position: new google.maps.LatLng(orange_stations[i][1], orange_stations[i][2]),
+        map: map,
+		icon: image_2
+    });
+
+    	google.maps.event.addListener(station_marker, 'click', (function(station_marker, i) {
+        	return function() {
+          		infowindow.setContent(orange_stations[i][0]);
+          		infowindow.open(map, station_marker);
+        	}		
+    	})(station_marker, i));
+	}
+}
+
+//42.355295, -71.060788, -dt crossing
