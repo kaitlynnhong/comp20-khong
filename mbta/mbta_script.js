@@ -97,6 +97,7 @@ function renderMap()
 
 	red_station_markers();
 	render_redline();
+	orange_station_markers();
 }
 
 //function red_station_markers()
@@ -192,4 +193,38 @@ function orange_station_markers()
 	}
 }
 
-//42.355295, -71.060788, -dt crossing
+function render_orangeline()
+{ 
+	var orange_coords = [
+		{lat: 42.4353430165, lng: -71.071189642},
+		{lat: 42.4273133438, lng: -71.073871851},
+		{lat: 42.4042955853, lng: -71.0770046711},
+		{lat: 42.3857548427, lng: -71.0770707729},
+		{lat: 42.3830128834, lng: -71.0771012306},
+		{lat: 42.3716383181, lng: -71.0702776909},
+		{lat: 42.365512, lng: -71.061423},
+		{lat: 42.362498, lng: -71.058996},
+		{lat: 42.355295, lng: -71.060788},
+		{lat: 42.358897, lng: -71.057795}, 
+		{lat: 42.352228, lng: -71.062892},
+		{lat: 42.3498873,lng: -71.063795},
+		{lat: 42.3472772215, lng: -71.0760390759},
+		{lat: 42.3415519196, lng: -71.0832166672},
+		{lat: 42.3356674788, lng: -71.0905230045},
+		{lat: 42.3315274209, lng: -71.0954046249},
+		{lat: 42.3227388088, lng: -71.1000823975},
+		{lat: 42.3192008078, lng: -71.1028289795},
+		{lat: 42.3105691548, lng: -71.107313633},
+		{lat: 42.300362, lng: -71.113411}
+	]
+
+	var orangeline_path = new google.maps.Polyline({
+		path: orange_coords,
+		geodesic: true,
+        strokeColor: '#FFA500',
+        strokeOpacity: 1.0,
+        strokeWeight: 3
+	});
+	orangeline_path.setMap(map);
+}
+
