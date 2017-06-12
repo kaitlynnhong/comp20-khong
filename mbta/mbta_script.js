@@ -98,6 +98,7 @@ function renderMap()
 	red_station_markers();
 	render_redline();
 	orange_station_markers();
+	render_orangeline();
 }
 
 //function red_station_markers()
@@ -204,9 +205,9 @@ function render_orangeline()
 		{lat: 42.3716383181, lng: -71.0702776909},
 		{lat: 42.365512, lng: -71.061423},
 		{lat: 42.362498, lng: -71.058996},
-		{lat: 42.355295, lng: -71.060788},
-		{lat: 42.358897, lng: -71.057795}, 
+		{lat: 42.355295, lng: -71.060788}, 
 		{lat: 42.352228, lng: -71.062892},
+		{lat: 42.358897, lng: -71.057795},
 		{lat: 42.3498873,lng: -71.063795},
 		{lat: 42.3472772215, lng: -71.0760390759},
 		{lat: 42.3415519196, lng: -71.0832166672},
