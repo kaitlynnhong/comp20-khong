@@ -1,5 +1,5 @@
 MBTA Lab 8
-1. All elements of the lab work correctly, although I was wondering about implementing an easier way to render the polylines without having to type every coordinate out. I was thinking of using a for loop as I did for placing the markers, but found it too confusing. 
+1. All elements of the lab work correctly, although I was wondering about implementing an easier way to render the polylines without having to type every coordinate out. I was thinking of using a for loop as I did for placing the markers, but found it too confusing. Also, I placed the orange and blue lines, but did not have enough time to do the commuter rail.
 2. I did not collaborate with anyone on this assignment.
 3. I spent approximately 11 hours on this assignment.
 4. sources: 
