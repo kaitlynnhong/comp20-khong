@@ -1,14 +1,19 @@
 var myLat = 0, myLng = 0;
 var request = new XMLHttpRequest();
-//image object for unique red line icon, sized appropriately
-var image = {
+//image objects for unique line icons, sized appropriately
+var image_r = {
 	url: 'http://www.jiekeyou.com/wp-content/uploads/2014/07/public-transport-icon.png',
 	scaledSize: new google.maps.Size(25,25)
 };
-var image_2 = {
+var image_o = {
 	url: 'https://cdn0.iconfinder.com/data/icons/transport-14/512/Train_Red.png',
 	scaledSize: new google.maps.Size(25,25)
 };
+var image_b = {
+	url: '',
+	scaledSize: new google.maps.Size(25,25)
+}
+
 //created south_station object for center 
 var south_station = new google.maps.LatLng(myLat, myLng);
 //object containing array of other red stations
@@ -57,7 +62,23 @@ var orange_stations = [
 	['Green Street Station', 42.3105691548, -71.107313633, 2],
 	['Forest Hills Station', 42.300362, -71.113411, 1]
 ]
+//object containing arrays of blue stations
+var blue_stations = [
+	['Wonderland Station', 42.414246, -70.992144, 10],
+	['Revere Beach Station', 42.4071633648, -70.992193222, 9],
+	['Beachmont Station', 42.3974187182, -70.992193222, 8],
+	['Suffolk Downs Station', 42.3884015915, -71.0003578663, 7],
+	['Orient Heights Station', 42.386676, -71.006628, ],
+	['Wood Island Station', 42.380797, -71.023394, 6],
+	['Logan Airport Station', 42.3727334327, -71.035194397, 5],
+	['Maverick Station', 42.36886, -71.039926, 4],
+	['Aquarium Station', 42.359456, -71.05357, 3],
+	//state station (orange)
+	['Government Center Station', 42.359297, -71.059895, 2],
+	['Bowdoin Station', 42.361457, -71.062129, 1]
+]
 
+//map type and center options
 var myOptions = {
     zoom: 15, 
 	center: south_station,
@@ -86,7 +107,7 @@ function renderMap()
 	var south_marker = new google.maps.Marker({
 		position: south_station,
 		title: "South Station, Boston, MA",
-		icon: image
+		icon: image_r
 	});
 	south_marker.setMap(map);
 
@@ -95,13 +116,17 @@ function renderMap()
 		infowindow.open(map, south_marker);
 	});
 
+	//render other stations and lines
 	red_station_markers();
 	render_redline();
 	orange_station_markers();
 	render_orangeline();
+	blue_station_markers();
+	render_blueline();
 }
 
 //function red_station_markers()
+//creates multiple unique red icons for red line stations
 function red_station_markers() 
 {
 	var station_marker, i;
@@ -110,7 +135,7 @@ function red_station_markers()
         station_marker = new google.maps.Marker({
         position: new google.maps.LatLng(red_stations[i][1], red_stations[i][2]),
         map: map,
-		icon: image
+		icon: image_r
     });
 
     	google.maps.event.addListener(station_marker, 'click', (function(station_marker, i) {
@@ -183,7 +208,7 @@ function orange_station_markers()
         station_marker = new google.maps.Marker({
         position: new google.maps.LatLng(orange_stations[i][1], orange_stations[i][2]),
         map: map,
-		icon: image_2
+		icon: image_o
     });
 
     	google.maps.event.addListener(station_marker, 'click', (function(station_marker, i) {
@@ -230,6 +255,56 @@ function render_orangeline()
 	});
 	orangeline_path.setMap(map);
 }
+//function: blue_station_markers()
+//creates multiple unique blue icons for blue line stations
+function blue_station_markers() 
+{
+	var station_marker, i;
+
+	for (i = 0; i < blue_stations.length; i++) {  
+        station_marker = new google.maps.Marker({
+        position: new google.maps.LatLng(blue_stations[i][1], blue_stations[i][2]),
+        map: map,
+		icon: image_b
+    });
+
+    	google.maps.event.addListener(station_marker, 'click', (function(station_marker, i) {
+        	return function() {
+          		infowindow.setContent(blue_stations[i][0]);
+          		infowindow.open(map, station_marker);
+        	}		
+    	})(station_marker, i));
+	}
+}
+//function: render_blueline()
+//takes coordinates of blue line stations and renders simple polyline
+function render_blueline()
+{ 
+	var blue_coords = [
+		{lat: 42.414246, lng: -70.992144},
+		{lat: 42.4071633648, lng: -70.992193222},
+		{lat: 42.3974187182, lng: -70.992193222},
+		{lat: 42.3884015915, lng: -71.0003578663},
+		{lat: 42.386676, lng: -71.006628},
+		{lat: 42.380797, lng: -71.023394},
+		{lat: 42.3727334327, lng: -71.035194397},
+		{lat: 42.36886, lng: -71.039926},
+		{lat: 42.359456, lng: -71.05357},
+		{lat: 42.358897, lng: -71.057795},
+		{lat: 42.359297, lng: -71.059895},
+		{lat: 42.361457, lng: -71.062129}
+	]
+
+	var blueline_path = new google.maps.Polyline({
+		path: blue_coords,
+		geodesic: true,
+        strokeColor: '#FFA500',
+        strokeOpacity: 1.0,
+        strokeWeight: 3
+	});
+	blueline_path.setMap(map);
+}
+
 
 
 
