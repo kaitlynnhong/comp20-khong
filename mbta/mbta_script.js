@@ -10,7 +10,7 @@ var image_o = {
 	scaledSize: new google.maps.Size(25,25)
 };
 var image_b = {
-	url: '',
+	url: 'https://cdn0.iconfinder.com/data/icons/transport-14/128/Train_Blue.png',
 	scaledSize: new google.maps.Size(25,25)
 }
 
@@ -298,7 +298,7 @@ function render_blueline()
 	var blueline_path = new google.maps.Polyline({
 		path: blue_coords,
 		geodesic: true,
-        strokeColor: '#FFA500',
+        strokeColor: '#0000FF',
         strokeOpacity: 1.0,
         strokeWeight: 3
 	});
