@@ -88,7 +88,8 @@ function renderMap()
 	google.maps.event.addListener(map, 'click', find_closest_marker);
 	var closest = find_closest_marker();
 
-	var contentString = "<p>You are here!</p>" + "<p>The closest MBTA Redline Station is:</p>" + closest;
+	var contentString = "<p>You are here!</p>" + "<p>The closest MBTA Redline Station is:</p>" + closest.station_name 
+						+ ", <p></p>" + closest.closest_distance + " miles away.";
 	infowindow = new google.maps.InfoWindow({
     	content: contentString
   	});
@@ -118,7 +119,10 @@ function find_closest_marker()
             closest = i;
         }
     }
-	return red_stations[closest][0];
+	return {
+		station_name: red_stations[closest][0],
+		closest_distance: distances[closest]
+	}
 }
 
 //function red_station_markers()
