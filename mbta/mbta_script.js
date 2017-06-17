@@ -75,21 +75,50 @@ function renderMap()
 	me = new google.maps.LatLng(myLat, myLng);
 	map.panTo(me);
 
-	//create marker of current location
-	var me_marker = new google.maps.Marker({
-		position: me,
-		title: "Your current location"
-	});
-	me_marker.setMap(map);
-
-	google.maps.event.addListener(me_marker, 'click', function() {
-					infowindow.setContent(me_marker.title);
-					infowindow.open(map, me_marker);
-	});
-
 	//render redline markers and polyline 
 	red_station_markers();
 	render_redline();
+
+	//create marker of current location
+	var me_marker = new google.maps.Marker({
+		position: me,
+	});
+	me_marker.setMap(map);
+
+	google.maps.event.addListener(map, 'click', find_closest_marker);
+	var closest = find_closest_marker();
+
+	var contentString = "<p>You are here!</p>" + "<p>The closest MBTA Redline Station is:</p>" + closest;
+	infowindow = new google.maps.InfoWindow({
+    	content: contentString
+  	});
+
+	google.maps.event.addListener(me_marker, 'click', function() {
+					infowindow.open(map, me_marker);
+	});
+}
+
+function rad(x) {return x*Math.PI/180;}
+function find_closest_marker()
+{
+    var R = 6371; // radius of earth in km
+    var distances = [];
+    var closest = -1;
+    for( i=0;i<red_stations.length; i++ ) {
+        var mlat = red_stations[i][1];
+        var mlng = red_stations[i][2];
+        var dLat  = rad(mlat - myLat);
+        var dLong = rad(mlng - myLng);
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(rad(myLat)) * Math.cos(rad(myLat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c;
+        distances[i] = d;
+        if ( closest == -1 || d < distances[closest] ) {
+            closest = i;
+        }
+    }
+	return red_stations[closest][0];
 }
 
 //function red_station_markers()
@@ -100,10 +129,10 @@ function red_station_markers()
 
 	for (i = 0; i < red_stations.length; i++) {  
         station_marker = new google.maps.Marker({
-        position: new google.maps.LatLng(red_stations[i][1], red_stations[i][2]),
-        map: map,
-		icon: image_r
-    });
+        	position: new google.maps.LatLng(red_stations[i][1], red_stations[i][2]),
+        	map: map,
+			icon: image_r
+		});
 
     	google.maps.event.addListener(station_marker, 'click', (function(station_marker, i) {
         	return function() {
