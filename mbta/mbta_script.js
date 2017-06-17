@@ -1,15 +1,17 @@
 var myLat = 0, myLng = 0;
 var request = new XMLHttpRequest();
+//created your location object for center 
+var me = new google.maps.LatLng(myLat, myLng);
+
 //image objects for unique line icons, sized appropriately
 var image_r = {
 	url: 'http://www.jiekeyou.com/wp-content/uploads/2014/07/public-transport-icon.png',
 	scaledSize: new google.maps.Size(25,25)
 };
 
-//created south_station object for center 
-var south_station = new google.maps.LatLng(myLat, myLng);
 //object containing array of other red stations
 var red_stations = [
+	['South Station', 42.352271, -71.05524200000001, 22],
 	['Andrew Station', 42.330154, -71.057655, 21],
 	['Porter Square', 42.3884, -71.11914899999999, 20],
 	['Harvard Square', 42.373362,  -71.118956, 19],
@@ -36,7 +38,7 @@ var red_stations = [
 //map type and center options
 var myOptions = {
     zoom: 15, 
-	center: south_station,
+	center: me,
 	mapTypeId: google.maps.MapTypeId.ROADMAP
 };
 var map;
@@ -47,31 +49,45 @@ var infowindow = new google.maps.InfoWindow();
 function init()
 {
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    renderMap();
+    get_location();
 
 }
+
+function get_location()
+{
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			myLat = position.coords.latitude;
+			myLng = position.coords.longitude;
+			renderMap();
+		});
+	}
+	else {
+		alert("Geolocation is not supported by your web browser.");
+	}
+}
+
 //function: renderMap()
-//purpose: creates center of map around marker at South Station	
+//purpose: creates center of map around marker at your current location
 function renderMap()
 {
-	myLat = 42.352271;
-    myLng = -71.05524200000001;
-    south_station = new google.maps.LatLng(myLat, myLng);
-	map.panTo(south_station);
+	//center map around your current location
+	me = new google.maps.LatLng(myLat, myLng);
+	map.panTo(me);
 
-	var south_marker = new google.maps.Marker({
-		position: south_station,
-		title: "South Station, Boston, MA",
-		icon: image_r
+	//create marker of current location
+	var me_marker = new google.maps.Marker({
+		position: me,
+		title: "Your current location"
 	});
-	south_marker.setMap(map);
+	me_marker.setMap(map);
 
-	google.maps.event.addListener(south_marker, 'click', function() {
-		infowindow.setContent(south_marker.title);
-		infowindow.open(map, south_marker);
+	google.maps.event.addListener(me_marker, 'click', function() {
+					infowindow.setContent(me_marker.title);
+					infowindow.open(map, me_marker);
 	});
 
-	//render other stations and lines
+	//render redline markers and polyline 
 	red_station_markers();
 	render_redline();
 }
