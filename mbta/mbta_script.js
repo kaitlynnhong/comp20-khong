@@ -43,6 +43,7 @@ var myOptions = {
 };
 var map;
 var infowindow = new google.maps.InfoWindow();
+var closest = {};
 
 //function init()
 //purpose: generate new map object in the 'map_canvas' div using myOptions specifications		
@@ -86,7 +87,7 @@ function renderMap()
 	me_marker.setMap(map);
 
 	google.maps.event.addListener(map, 'click', find_closest_marker);
-	var closest = find_closest_marker();
+	closest = find_closest_marker();
 
 	var contentString = "<p>You are here!</p>" + "<p>The closest MBTA Redline Station is:</p>" + closest.station_name 
 						+ ", <p></p>" + closest.closest_distance + " miles away.";
@@ -219,3 +220,4 @@ function closest_polyline()
 	});
 	polyline.setMap(map);
 }
+
