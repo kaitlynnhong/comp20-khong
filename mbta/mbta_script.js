@@ -97,12 +97,14 @@ function renderMap()
 	google.maps.event.addListener(me_marker, 'click', function() {
 					infowindow.open(map, me_marker);
 	});
+
+	closest_polyline();
 }
 
 function rad(x) {return x*Math.PI/180;}
 function find_closest_marker()
 {
-    var R = 6371; // radius of earth in km
+    var R = 3956; // radius of earth in miles
     var distances = [];
     var closest = -1;
     for( i=0;i<red_stations.length; i++ ) {
@@ -121,7 +123,9 @@ function find_closest_marker()
     }
 	return {
 		station_name: red_stations[closest][0],
-		closest_distance: distances[closest]
+		closest_distance: distances[closest],
+		closest_lat: red_stations[closest][1],
+		closest_lng: red_stations[closest][2]
 	}
 }
 
@@ -197,4 +201,21 @@ function render_redline()
         strokeWeight: 3
 	});
 	redline_2.setMap(map);
+}
+
+function closest_polyline()
+{
+	var coords = [
+		{lat: myLat, lng: myLng},
+		{lat: closest.closest_lat, lng: closest.closest_lng}
+	]
+
+	var polyline = new google.maps.Polyline({
+		path: coords,
+		geodesic: true, 
+		strokeColor: '#3368FF',
+		strokeOpacity: 1.0,
+		strokeWeight: 2.5
+	});
+	polyline.setMap(map);
 }
