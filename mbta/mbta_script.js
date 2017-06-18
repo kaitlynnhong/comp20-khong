@@ -150,11 +150,10 @@ function red_station_markers()
 
 		request.onreadystatechange = function() {
 			if (request.readyState == 4 && request.status == 200) {
-				var busdata = request.responseText;
-				var parsed = JSON.parse(busdata);
+				var busdata = JSON.parse(request.responseText);
 
 				for (j = 0; j < busdata.length; j++) {
-					//syntax???
+					//syntax??? info window is not appearing 
 					if(busdata.TripList.Trips[j].Predictions[j].Stop == red_stations[i][0]) {
 						var busdata_string = red_stations[i][0] + "<p>Incoming trains at this station:</p>" + "Train number: " + busdata.TripList.Trips[j].Position.Train + ", Arriving in " + (busdata.TripList.Trips[j].Predictions[j].Seconds)/60 + " minutes.";
 						infowindow2 = new google.maps.InfoWindow({
