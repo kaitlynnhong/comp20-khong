@@ -5,8 +5,9 @@ var me = new google.maps.LatLng(myLat, myLng);
 
 //image objects for unique line icons, sized appropriately
 var image_r = {
-	url: 'http://www.trackmbta.com/images/red_line_tracker_icon.png',
-	scaledSize: new google.maps.Size(25,25)
+	url: 'https://cdn0.iconfinder.com/data/icons/transport-14/512/Train_Red.png',
+	scaledSize: new google.maps.Size(25,25),
+	color: '#FF0000',
 };
 
 //object containing array of other red stations
@@ -144,6 +145,7 @@ function red_station_markers()
 			icon: image_r
 		});
 
+		//notes: how to access schedule data (correct syntax)? should this be its own function? 
 		request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
 
 		request.onreadystatechange = function() {
@@ -152,6 +154,7 @@ function red_station_markers()
 				var parsed = JSON.parse(busdata);
 
 				for (j = 0; j < busdata.length; j++) {
+					//syntax???
 					if(busdata.TripList.Trips[j].Predictions[j].Stop == red_stations[i][0]) {
 						var busdata_string = red_stations[i][0] + "<p>Incoming trains at this station:</p>" + "Train number: " + busdata.TripList.Trips[j].Position.Train + ", Arriving in " + (busdata.TripList.Trips[j].Predictions[j].Seconds)/60 + " minutes.";
 						infowindow2 = new google.maps.InfoWindow({
