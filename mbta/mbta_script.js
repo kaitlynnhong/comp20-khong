@@ -5,7 +5,7 @@ var me = new google.maps.LatLng(myLat, myLng);
 
 //image objects for unique line icons, sized appropriately
 var image_r = {
-	url: 'http://www.jiekeyou.com/wp-content/uploads/2014/07/public-transport-icon.png',
+	url: 'http://www.trackmbta.com/images/red_line_tracker_icon.png',
 	scaledSize: new google.maps.Size(25,25)
 };
 
@@ -43,6 +43,7 @@ var myOptions = {
 };
 var map;
 var infowindow = new google.maps.InfoWindow();
+var infowindow2 = new google.maps.InfoWindow();
 var closest = {};
 
 //function init()
@@ -143,12 +144,37 @@ function red_station_markers()
 			icon: image_r
 		});
 
-    	google.maps.event.addListener(station_marker, 'click', (function(station_marker, i) {
+		request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
+
+		request.onreadystatechange = function() {
+			if (request.readyState == 4 && request.status == 200) {
+				var busdata = request.responseText;
+				var parsed = JSON.parse(busdata);
+
+				for (j = 0; j < busdata.length; j++) {
+					if(busdata.TripList.Trips[j].Predictions[j].Stop == red_stations[i][0]) {
+						var busdata_string = red_stations[i][0] + "<p>Incoming trains at this station:</p>" + "Train number: " + busdata.TripList.Trips[j].Position.Train + ", Arriving in " + (busdata.TripList.Trips[j].Predictions[j].Seconds)/60 + " minutes.";
+						infowindow2 = new google.maps.InfoWindow({
+    						content: busdata_string
+  						});
+					}
+				}
+			}
+			else if (request.readyState == 4 && request.status != 200) {
+				alert("Cannot display Red line schedule!");
+			}
+		}
+		request.send();	
+
+    	/*google.maps.event.addListener(station_marker, 'click', (function(station_marker, i) {
         	return function() {
           		infowindow.setContent(red_stations[i][0]);
           		infowindow.open(map, station_marker);
         	}		
-    	})(station_marker, i));
+    	})(station_marker, i));*/
+		google.maps.event.addListener(station_marker, 'click', function() {
+					infowindow2.open(map, station_marker);
+		});
 	}
 }
 
@@ -221,3 +247,19 @@ function closest_polyline()
 	polyline.setMap(map);
 }
 
+function get_schedule()
+{
+	request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
+
+	request.onreadystatechange = function() {
+		if (request.readyState == 4 && request.status == 200) {
+			var data = request.responseText;
+			var parsed = JSON.parse(data);
+
+		}
+		else if (request.readyState == 4 && request.status != 200) {
+			alert("Cannot display Red line schedule!");
+		}
+	}
+	request.send();
+}
