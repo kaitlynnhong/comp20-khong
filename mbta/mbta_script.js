@@ -145,35 +145,14 @@ function red_station_markers()
 			icon: image_r
 		});
 
-		//notes: how to access schedule data (correct syntax)? should this be its own function? 
-		request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
-
-		request.onreadystatechange = function() {
-			if (request.readyState == 4 && request.status == 200) {
-				var busdata = JSON.parse(request.responseText);
-
-				for (j = 0; j < busdata.length; j++) {
-					//syntax??? info window is not appearing 
-					if(busdata.TripList.Trips[j].Predictions[j].Stop == red_stations[i][0]) {
-						var busdata_string = red_stations[i][0] + "<p>Incoming trains at this station:</p>" + "Train number: " + busdata.TripList.Trips[j].Position.Train + ", Arriving in " + (busdata.TripList.Trips[j].Predictions[j].Seconds)/60 + " minutes.";
-						infowindow2 = new google.maps.InfoWindow({
-    						content: busdata_string
-  						});
-					}
-				}
-			}
-			else if (request.readyState == 4 && request.status != 200) {
-				alert("Cannot display Red line schedule!");
-			}
-		}
-		request.send();	
-
+		update_schedule();
     	/*google.maps.event.addListener(station_marker, 'click', (function(station_marker, i) {
         	return function() {
           		infowindow.setContent(red_stations[i][0]);
           		infowindow.open(map, station_marker);
         	}		
     	})(station_marker, i));*/
+
 		google.maps.event.addListener(station_marker, 'click', function() {
 					infowindow2.open(map, station_marker);
 		});
@@ -264,4 +243,32 @@ function get_schedule()
 		}
 	}
 	request.send();
+}
+
+function update_schedule() 
+{
+	//notes: how to access schedule data (correct syntax)? should this be its own function? 
+	request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
+
+	request.onreadystatechange = function() {
+		if (request.readyState == 4 && request.status == 200) {
+			var busdata = JSON.parse(request.responseText);
+
+			for (i - 0; i < red_stations.length; i++) {
+				for (j = 0; j < busdata.length; j++) {
+					//syntax??? info window is not appearing 
+					if(busdata.TripList.Trips[j].Predictions[j].Stop == red_stations[i][0]) {
+						var busdata_string = red_stations[i][0] + "<p>Incoming trains at this station:</p>" + "Train number: " + busdata.TripList.Trips[j].Position.Train + ", Arriving in " + (busdata.TripList.Trips[j].Predictions[j].Seconds)/60 + " minutes.";
+						infowindow2 = new google.maps.InfoWindow({
+    						content: busdata_string
+  						});
+					}
+				}
+			}
+		}
+			else if (request.readyState == 4 && request.status != 200) {
+				alert("Cannot display Red line schedule!");
+			}
+		}
+		request.send();	
 }
