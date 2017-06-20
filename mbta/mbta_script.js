@@ -145,17 +145,50 @@ function red_station_markers()
 			icon: image_r,
 			html: red_stations[i][0]
 		});
-
-    	google.maps.event.addListener(station_marker, 'click', (function(station_marker) {
-        	return function() {
-          		infowindow2.setContent(station_marker.html);
-          		infowindow2.open(map, station_marker);
-        	}		
-    	})(station_marker));
 	}
 
-	update_infowindows(station_marker);
-}
+	var content = station_marker.html; 
+	infowindow2 = new google.maps.InfoWindow({
+                content: content
+    });
+
+
+    google.maps.event.addListener(station_marker, 'click', function() {
+		request = new XMLHttpRequest();
+		request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
+
+		console.log("opened request");
+		request.onreadystatechange = function() {
+			if (request.readyState == 4 && request.status == 200) {
+				var schedule = JSON.parse(request.responseText);
+				console.log("create parsed schedule");
+
+				for (i = 0; j < red_stations.length; i++) {
+				for (j = 0; j < schedule.TripList.length; j++) {
+					if (schedule.TripList.Trips[j].Predictions[j].Stop == red_stations[i][0]) {
+							content = station_marker.html + "Train number: " + schedule.TripList.Trips[j].Position.Train + ", Arriving in " + (schedule.TripList.Trips[j].Predictions[j].Seconds)/60 + " minutes.";
+							console.log("changed content");
+							
+							infowindow2.setContent(content);
+							console.log("set content");
+					}	
+				}	
+				infowindow2.open(map, station_marker);
+				console.log("opened infowindow ");
+				}
+			}
+				
+			else if (request.readyState == 4 && request.status != 200) {
+					alert("Cannot display Red line schedule!");
+			}
+		}	
+		request.send();		
+		console.log("request sent");
+
+	});
+
+	}
+
 
 
 
@@ -232,7 +265,6 @@ function update_infowindows(station_marker)
 {
 	var i, j;
 	request = new XMLHttpRequest();
-	//notes: how to access schedule data (correct syntax)? should this be its own function? 
 	request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
 
 	request.onreadystatechange = function() {
