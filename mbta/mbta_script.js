@@ -46,7 +46,7 @@ var map;
 var infowindow = new google.maps.InfoWindow();
 var infowindow2 = new google.maps.InfoWindow();
 var closest = {};
-var station_marker;
+var marker_array = [];
 
 //function init()
 //purpose: generate new map object in the 'map_canvas' div using myOptions specifications		
@@ -140,14 +140,16 @@ function red_station_markers()
 	var i, j, k;
 
 	for (i = 0; i < red_stations.length; i++) {  
-        station_marker = new google.maps.Marker({
+        marker_array[i] = new google.maps.Marker({
         	position: new google.maps.LatLng(red_stations[i][1], red_stations[i][2]),
         	map: map,
 			icon: image_r,
-			html: red_stations[i][0]
+			name: red_stations[i][0]
 		});
 
-    	google.maps.event.addListener(station_marker, 'click', function() {
+		var station_markers = marker_array[i];
+
+ 		google.maps.event.addListener(station_markers, 'click', function() {
 			request = new XMLHttpRequest();
 			request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
 
@@ -156,31 +158,31 @@ function red_station_markers()
 				if (request.readyState == 4 && request.status == 200) {
 					var schedule = JSON.parse(request.responseText);
 					console.log("create parsed schedule");
-
-					var content = station_marker.html;
+				
 					for (j = 0; j < schedule.TripList.Trips.length; j++) {
 						for (k = 0; k < schedule.TripList.Trips[j].Predictions.length; k++) {
-							if (schedule.TripList.Trips[j].Predictions[k].Stop == station_marker.html) {
-								content += "<p>" + schedule.TripList.Trips[j].Destination + " bound train</p> Arriving in " + (schedule.TripList.Trips[j].Predictions[k].Seconds)/60 + " minutes.";
+							if (schedule.TripList.Trips[j].Predictions[k].Stop == station_markers.name) {
+								station_markers.name += "<p>" + schedule.TripList.Trips[j].Destination + " bound train, arriving in " + Math.round((schedule.TripList.Trips[j].Predictions[k].Seconds)/60) + " minutes.</p>";
 								console.log("changed content");
-
-								infowindow2.setContent(content);
-								console.log("set content");
 							}	
 						}
 					}
-					infowindow2.open(map, station_marker);
+					
+					infowindow2.setContent(this.name);
+					console.log("set content");
+
+					infowindow2.open(map, this);
 					console.log("opened infowindow ");
 				}
+				
 				else if (request.readyState == 4 && request.status != 200) {
 					alert("Cannot display Red line schedule!");
 				}
 			}	
 			request.send();		
 			console.log("request sent");
-
 		});
-	}
+	}	
 }
 
 
@@ -255,7 +257,7 @@ function closest_polyline()
 	polyline.setMap(map);
 }
 
-function update_infowindows(station_marker) 
+/*function update_infowindows(station_marker) 
 {
 	var i, j;
 	request = new XMLHttpRequest();
@@ -280,7 +282,7 @@ function update_infowindows(station_marker)
 	request.send();	
 }
 
-/*for (i = 0; i < red_stations.length; i++) {	
+for (i = 0; i < red_stations.length; i++) {	
 
 				busdata_string = red_stations[i][0] + "<p>Incoming trains at this station:</p>";
 
