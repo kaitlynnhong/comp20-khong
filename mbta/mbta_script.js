@@ -57,6 +57,8 @@ function init()
 
 }
 
+//functio: get_location
+//determines current location using geolocation 
 function get_location()
 {
 	if (navigator.geolocation) {
@@ -105,6 +107,8 @@ function renderMap()
 	closest_polyline();
 }
 
+//function: rad and find_closest_marker
+//uses haversine formula to determine distance between station closest to your location in miles
 function rad(x) {return x*Math.PI/180;}
 function find_closest_marker()
 {
@@ -125,6 +129,7 @@ function find_closest_marker()
             closest = i;
         }
     }
+	//return object including data for the closest station to your location
 	return {
 		station_name: red_stations[closest][0],
 		closest_distance: distances[closest],
@@ -135,6 +140,7 @@ function find_closest_marker()
 
 //function red_station_markers()
 //creates multiple unique red icons for red line stations
+//creates updating infowindows with real time schedule 
 function red_station_markers() 
 {
 	var i, j, k;
@@ -144,37 +150,32 @@ function red_station_markers()
         	position: new google.maps.LatLng(red_stations[i][1], red_stations[i][2]),
         	map: map,
 			icon: image_r,
-			name: red_stations[i][0]
+			name: red_stations[i][0],
 		});
 
 		var station_markers = marker_array[i];
 
  		google.maps.event.addListener(station_markers, 'click', function() {
+			var theActualMarker = this;		//ensures 'this' referencing marker object
 			request = new XMLHttpRequest();
 			request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
 
-			console.log("opened request");
 			request.onreadystatechange = function() {
 				if (request.readyState == 4 && request.status == 200) {
 					var schedule = JSON.parse(request.responseText);
-					console.log("create parsed schedule");
-				
+					
+					//nested for loops go through the json data compare to marker data 
 					for (j = 0; j < schedule.TripList.Trips.length; j++) {
 						for (k = 0; k < schedule.TripList.Trips[j].Predictions.length; k++) {
-							if (schedule.TripList.Trips[j].Predictions[k].Stop == station_markers.name) {
-								station_markers.name += "<p>" + schedule.TripList.Trips[j].Destination + " bound train, arriving in " + Math.round((schedule.TripList.Trips[j].Predictions[k].Seconds)/60) + " minutes.</p>";
-								console.log("changed content");
+							if (schedule.TripList.Trips[j].Predictions[k].Stop == theActualMarker.name) {
+								theActualMarker.name += "<p>" + schedule.TripList.Trips[j].Destination + " bound train, arriving in " + Math.round((schedule.TripList.Trips[j].Predictions[k].Seconds)/60) + " minutes.</p>";
 							}	
 						}
 					}
 					
-					infowindow2.setContent(this.name);
-					console.log("set content");
-
-					infowindow2.open(map, this);
-					console.log("opened infowindow ");
-				}
-				
+					infowindow2.setContent(theActualMarker.name);
+					infowindow2.open(map, theActualMarker);
+				}	
 				else if (request.readyState == 4 && request.status != 200) {
 					alert("Cannot display Red line schedule!");
 				}
@@ -184,9 +185,6 @@ function red_station_markers()
 		});
 	}	
 }
-
-
-
 
 //function: render_redline()
 //renders red polyline following the red station coordinates
@@ -240,6 +238,8 @@ function render_redline()
 	redline_2.setMap(map);
 }
 
+//function: closest_polyline 
+//renders the polyline from current location to the closest station 
 function closest_polyline()
 {
 	var coords = [
@@ -256,46 +256,3 @@ function closest_polyline()
 	});
 	polyline.setMap(map);
 }
-
-/*function update_infowindows(station_marker) 
-{
-	var i, j;
-	request = new XMLHttpRequest();
-	request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
-
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && request.status == 200) {
-			var schedule = JSON.parse(request.responseText);
-
-			for (i = 0; i < red_stations.length; i++) {
-				for (j = 0; j < schedule.TripList.length; j++) {
-					if (schedule.TripList.Trips[j].Predictions[j].Stop == red_stations[i][0]) {
-						station_marker.html += "Train number: " + schedule.TripList.Trips[j].Position.Train + ", Arriving in " + (schedule.TripList.Trips[j].Predictions[j].Seconds)/60 + " minutes.";
-					}
-				}	
-			}
-		}
-		else if (request.readyState == 4 && request.status != 200) {
-				alert("Cannot display Red line schedule!");
-		}
-	}
-	request.send();	
-}
-
-for (i = 0; i < red_stations.length; i++) {	
-
-				busdata_string = red_stations[i][0] + "<p>Incoming trains at this station:</p>";
-
-				for (j = 0; j < busdata.length; j++) {
-					//syntax??? info window is not appearing 
-					if(busdata.TripList.Trips[j].Predictions[j].Stop == red_stations[i][0]) {
-						busdata_string += "Train number: " + busdata.TripList.Trips[j].Position.Train + ", Arriving in " + (busdata.TripList.Trips[j].Predictions[j].Seconds)/60 + " minutes.";
-					}
-				}
-
-				infowindow2 = new google.maps.InfoWindow({
-							content: busdata_string
-				});
-				
-				
-			}*/
