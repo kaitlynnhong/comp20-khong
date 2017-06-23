@@ -98,8 +98,8 @@ function renderMap()
 						+ ", <p></p>" + closest.closest_distance + " miles away." + "<p>Other Red Line Stations:</p>";
 	
 	//creating table of other distances 
-	var tableString = "<table class=\"table.colorful\"><tr><th>Station Name</th><th>Distance</th></tr>";
-	for (i = 0; i < closest.distances_array.length; i++)
+	var tableString = "<table class=\"table.colorful\"><tr><th>Station Name</th><th>Distance Away in Miles</th></tr>";
+	for (i = 0; i < closest.distances_array.length-1; i++)
 	{
 		tableString += "<tr><td><b>" + red_stations[i][0] + "</b></td><td>" + closest.distances_array[i] + "</td></tr>";
 	}
@@ -108,7 +108,6 @@ function renderMap()
 	infowindow = new google.maps.InfoWindow({
     	content: contentString + tableString
   	});
-
 	google.maps.event.addListener(me_marker, 'click', function() {
 					infowindow.open(map, me_marker);
 	});
@@ -158,28 +157,6 @@ function find_closest_marker()
 		closest_lat: red_stations[closest][1],
 		closest_lng: red_stations[closest][2],
 		distances_array: distances
-		/*distance_0: distances[0],
-		distance_1: distances[1],
-		distance_2: distances[2],
-		distance_3: distances[3],
-		distance_4: distances[4],
-		distance_5: distances[5], 
-		distance_6: distances[6], 
-		distance_7: distances[7],
-		distance_8: distances[8],
-		distance_9: distances[9],
-		distance_10: distances[10],
-		distance_11: distances[11],
-		distance_12: distances[12],
-		distance_13: distances[13],
-		distance_14: distances[14],
-		distance_15: distances[15],
-		distance_16: distances[16],
-		distance_17: distances[17], 
-		distance_18: distances[18],
-		distance_19: distances[19],
-		distance_20: distances[20],
-		distance_21: distances[21]*/
 	}
 }
 
