@@ -97,8 +97,9 @@ function renderMap()
 	var contentString = "<p>You are here!</p>" + "<p>The closest MBTA Redline Station is:</p>" + closest.station_name 
 						+ ", <p></p>" + closest.closest_distance + " miles away." + "<p>Other Red Line Stations:</p>";
 	
-	//creating table of other distances 
+	//creating table of other distances in the infowindow 
 	var tableString = "<table class=\"table.colorful\"><tr><th>Station Name</th><th>Distance Away in Miles</th></tr>";
+	closest.distances_array.sort();
 	for (i = 0; i < closest.distances_array.length-1; i++)
 	{
 		tableString += "<tr><td><b>" + red_stations[i][0] + "</b></td><td>" + closest.distances_array[i] + "</td></tr>";
