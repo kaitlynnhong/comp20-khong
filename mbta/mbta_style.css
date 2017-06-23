@@ -17,3 +17,26 @@ body {
     background-color: rgb(229, 227, 223);
     font: 400 11px Arial, sans-serif;
 }
+
+table.colorful {
+        font-family: verdana, arial, sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+}
+table.colorful th {
+        background: #b5cfd2 url('blueCell.jpg');
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #999999;
+}
+table.colorful td {
+        background: #dcddc0 url('greenCell.jpg');
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #999999;
+}
