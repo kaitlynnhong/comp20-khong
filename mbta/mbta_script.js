@@ -105,10 +105,13 @@ function renderMap()
 	
 	//creating table of other distances in the infowindow 
 	var tableString = "<table class=\"table.colorful\"><tr><th>Station Name</th><th>Distance Away in Miles</th></tr>";
-	closest.distances_array.sort();
-	for (i = 1; i < closest.distances_array.length; i++)
+	//sort array of objects 
+	closest.distances_object.sort(function(a, b) {
+    	return parseFloat(a.distance) - parseFloat(b.distance);
+	});
+	for (i = 1; i < closest.distances_object.length; i++)
 	{	
-		tableString += "<tr><td><b>" + red_stations[i][0] + "</b></td><td>" + closest.distances_array[i] + "</td></tr>";	
+		tableString += "<tr><td><b>" + closest.distances_object[i].name + "</b></td><td>" + closest.distances_object[i].distance + "</td></tr>";	
 	}
 	tableString += "</table>";
 
@@ -163,7 +166,30 @@ function find_closest_marker()
 		closest_distance: distances[closest],
 		closest_lat: red_stations[closest][1],
 		closest_lng: red_stations[closest][2],
-		distances_array: distances
+		distances_object: [
+			{distance: distances[0], name: red_stations[0][0]},
+			{distance: distances[1], name: red_stations[1][0]},
+			{distance: distances[2], name: red_stations[2][0]},
+			{distance: distances[3], name: red_stations[3][0]},
+			{distance: distances[4], name: red_stations[4][0]},
+			{distance: distances[5], name: red_stations[5][0]},
+			{distance: distances[6], name: red_stations[6][0]},
+			{distance: distances[7], name: red_stations[7][0]},
+			{distance: distances[8], name: red_stations[8][0]},
+			{distance: distances[9], name: red_stations[9][0]},
+			{distance: distances[10], name: red_stations[10][0]},
+			{distance: distances[11], name: red_stations[11][0]},
+			{distance: distances[12], name: red_stations[12][0]},
+			{distance: distances[13], name: red_stations[13][0]},
+			{distance: distances[14], name: red_stations[14][0]},
+			{distance: distances[15], name: red_stations[15][0]},
+			{distance: distances[16], name: red_stations[16][0]},
+			{distance: distances[17], name: red_stations[17][0]},
+			{distance: distances[18], name: red_stations[18][0]},
+			{distance: distances[19], name: red_stations[19][0]},
+			{distance: distances[20], name: red_stations[20][0]},
+			{distance: distances[21], name: red_stations[21][0]}
+		]
 	}
 }
 
