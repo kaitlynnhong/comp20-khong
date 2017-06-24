@@ -106,7 +106,7 @@ function renderMap()
 	//creating table of other distances in the infowindow 
 	var tableString = "<table class=\"table.colorful\"><tr><th>Station Name</th><th>Distance Away in Miles</th></tr>";
 	closest.distances_array.sort();
-	for (i = 0; i < closest.distances_array.length; i++)
+	for (i = 1; i < closest.distances_array.length; i++)
 	{	
 		tableString += "<tr><td><b>" + red_stations[i][0] + "</b></td><td>" + closest.distances_array[i] + "</td></tr>";	
 	}
