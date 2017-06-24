@@ -11,7 +11,7 @@ var image_r = {
 };
 var train_image = {
 	url: 'http://www.iconsdb.com/icons/preview/red/rounded-rectangle-xxl.png',
-	scaledSize: new google.maps.Size(25,25),
+	scaledSize: new google.maps.Size(15, 15),
 	color: '#FF0000',
 }
 
@@ -203,19 +203,6 @@ function red_station_markers()
 					
 					infowindow2.setContent(theActualMarker.name);
 					infowindow2.open(map, theActualMarker);
-
-					//markers for train positions 	
-					for (p = 0; p < schedule.TripList.Trips.length; p++) {
-							var train_lat = schedule.TripList.Trips.Position.Lat;
-							var train_lng = schedule.TripList.Trips.Position.Long;
-							var train_position = {lat: train_lat, lng: train_lng};
-							var train_marker = new google.maps.Marker({
-								position: train_position,
-								map: map,
-								icon: train_image,
-							});
-							train_marker.setMap(map);	
-					}
 				}	
 				else if (request.readyState == 4 && request.status != 200) {
 					alert("Cannot display Red line schedule!");
@@ -224,7 +211,35 @@ function red_station_markers()
 			request.send();		
 			console.log("request sent");
 		});
+	}
+
+	//markers for train positions 	
+	var request2 = new XMLHttpRequest();
+	request2.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
+
+	request2.onreadystatechange = function() {
+		if (request2.readyState == 4 && request2.status == 200) {
+			var schedule = JSON.parse(request2.responseText);
+					
+			for (p = 0; p < schedule.TripList.Trips.length; p++) {
+				var train_lat = schedule.TripList.Trips.Position.Lat;
+				var train_lng = schedule.TripList.Trips.Position.Long;
+				var train_position = {lat: train_lat, lng: train_lng};
+				var train_marker = new google.maps.Marker({
+					position: train_position,
+					map: map,
+					icon: train_image,
+				});
+				train_marker.setMap(map);	
+			}	
+		}	
+		else if (request2.readyState == 4 && request2.status != 200) {
+			alert("Cannot display Red line trains!");
+		}
+		request2.send();	
 	}	
+		
+
 }
 
 //function: render_redline()
