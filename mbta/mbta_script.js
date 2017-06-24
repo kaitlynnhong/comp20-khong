@@ -9,6 +9,11 @@ var image_r = {
 	scaledSize: new google.maps.Size(25,25),
 	color: '#FF0000',
 };
+var train_image = {
+	url: 'http://www.iconsdb.com/icons/preview/red/rounded-rectangle-xxl.png',
+	scaledSize: new google.maps.Size(25,25),
+	color: '#FF0000',
+}
 
 //object containing array of other red stations
 var red_stations = [
@@ -198,6 +203,19 @@ function red_station_markers()
 					
 					infowindow2.setContent(theActualMarker.name);
 					infowindow2.open(map, theActualMarker);
+
+					//markers for train positions 	
+					for (p = 0; p < schedule.TripList.Trips.length; p++) {
+							var train_lat = schedule.TripList.Trips.Position.Lat;
+							var train_lng = schedule.TripList.Trips.Position.Long;
+							var train_position = {lat: train_lat, lng: train_lng};
+							var train_marker = new google.maps.Marker({
+								position: train_position,
+								map: map,
+								icon: train_image,
+							});
+							train_marker.setMap(map);	
+					}
 				}	
 				else if (request.readyState == 4 && request.status != 200) {
 					alert("Cannot display Red line schedule!");
