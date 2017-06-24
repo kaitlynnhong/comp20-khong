@@ -1,5 +1,6 @@
 var myLat = 0, myLng = 0;
 var request = new XMLHttpRequest();
+var request2 = new XMLHttpRequest();
 //created your location object for center 
 var me = new google.maps.LatLng(myLat, myLng);
 
@@ -106,8 +107,8 @@ function renderMap()
 	var tableString = "<table class=\"table.colorful\"><tr><th>Station Name</th><th>Distance Away in Miles</th></tr>";
 	closest.distances_array.sort();
 	for (i = 0; i < closest.distances_array.length-1; i++)
-	{
-		tableString += "<tr><td><b>" + red_stations[i][0] + "</b></td><td>" + closest.distances_array[i] + "</td></tr>";
+	{	
+		tableString += "<tr><td><b>" + red_stations[i][0] + "</b></td><td>" + closest.distances_array[i] + "</td></tr>";	
 	}
 	tableString += "</table>";
 
@@ -171,7 +172,7 @@ function find_closest_marker()
 //creates updating infowindows with real time schedule 
 function red_station_markers() 
 {
-	var i, j, k;
+	var i, j, k, p, m;
 
 	for (i = 0; i < red_stations.length; i++) {  
         marker_array[i] = new google.maps.Marker({
@@ -196,11 +197,10 @@ function red_station_markers()
 					for (j = 0; j < schedule.TripList.Trips.length; j++) {
 						for (k = 0; k < schedule.TripList.Trips[j].Predictions.length; k++) {
 							if (schedule.TripList.Trips[j].Predictions[k].Stop == theActualMarker.name) {
-								theActualMarker.name += "<p>" + schedule.TripList.Trips[j].Destination + " bound train, arriving in " + Math.round((schedule.TripList.Trips[j].Predictions[k].Seconds)/60) + " minutes.</p>";
+								theActualMarker.name += "<p>Upcoming train: " + schedule.TripList.Trips[j].Destination + " bound train, arriving in " + Math.round((schedule.TripList.Trips[j].Predictions[k].Seconds)/60) + " minutes.</p>";
 							}	
 						}
-					}
-					
+					}	
 					infowindow2.setContent(theActualMarker.name);
 					infowindow2.open(map, theActualMarker);
 				}	
@@ -209,37 +209,43 @@ function red_station_markers()
 				}
 			}	
 			request.send();		
-			console.log("request sent");
 		});
 	}
 
-	//markers for train positions 	
-	var request2 = new XMLHttpRequest();
+	/*markers for train positions
+	var train_lat, train_lng, train_positions = [], train_dest = [];
+
+	request2 = new XMLHttpRequest();
 	request2.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
+	console.log("request 2 open");
 
 	request2.onreadystatechange = function() {
 		if (request2.readyState == 4 && request2.status == 200) {
-			var schedule = JSON.parse(request2.responseText);
-					
-			for (p = 0; p < schedule.TripList.Trips.length; p++) {
-				var train_lat = schedule.TripList.Trips.Position.Lat;
-				var train_lng = schedule.TripList.Trips.Position.Long;
-				var train_position = {lat: train_lat, lng: train_lng};
-				var train_marker = new google.maps.Marker({
-					position: train_position,
-					map: map,
-					icon: train_image,
-				});
-				train_marker.setMap(map);	
+			var schedule2 = JSON.parse(request2.responseText);
+			console.log("parsed json");
+
+			for (p = 0; p < schedule2.TripList.Trips.length; p++) {
+				train_lat = schedule2.TripList.Trips[p].Position.Lat;
+				train_lng = schedule2.TripList.Trips[p].Position.Long;
+				train_positions[p] = {lat: train_lat, lng: train_lng};
+				train_dest[p] = schedule2.TripList.Trips[p].Destination;
+				console.log("created variables");
 			}	
 		}	
 		else if (request2.readyState == 4 && request2.status != 200) {
 			alert("Cannot display Red line trains!");
-		}
-		request2.send();	
-	}	
-		
+		}	
+	}
+	request2.send();
 
+	var train_marker_array = [];
+	for (m = 0; m < train_positions.length; m++) {
+		train_marker_array[m] = new google.maps.Marker({
+        	position: train_positions[m],
+        	map: map,
+			icon: train_image,
+		});
+	}*/
 }
 
 //function: render_redline()
