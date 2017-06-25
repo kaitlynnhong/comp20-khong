@@ -239,7 +239,7 @@ function red_station_markers()
 	}
 
 	/*markers for train positions
-	var train_lat, train_lng, train_positions = [], train_dest = [];
+	var train_lat = [], train_lng = [], train_positions = [], train_dest = [];
 
 	request2 = new XMLHttpRequest();
 	request2.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
@@ -251,8 +251,8 @@ function red_station_markers()
 			console.log("parsed json");
 
 			for (p = 0; p < schedule2.TripList.Trips.length; p++) {
-				train_lat = schedule2.TripList.Trips[p].Position.Lat;
-				train_lng = schedule2.TripList.Trips[p].Position.Long;
+				train_lat[p] = schedule2.TripList.Trips[p].Position.Lat;
+				train_lng[p] = schedule2.TripList.Trips[p].Position.Long;
 				train_positions[p] = {lat: train_lat, lng: train_lng};
 				train_dest[p] = schedule2.TripList.Trips[p].Destination;
 				console.log("created variables");
@@ -267,9 +267,10 @@ function red_station_markers()
 	var train_marker_array = [];
 	for (m = 0; m < train_positions.length; m++) {
 		train_marker_array[m] = new google.maps.Marker({
-        	position: train_positions[m],
+        	position: new google.maps.LatLng(train_lat[m], train_lng[m]),
         	map: map,
-			icon: train_image,
+			title: train_dest[m] + " bound train",
+			icon: train_image
 		});
 	}*/
 }
