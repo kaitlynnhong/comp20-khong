@@ -213,7 +213,7 @@ function red_station_markers()
  		google.maps.event.addListener(station_markers, 'click', function() {
 			var theActualMarker = this;		//ensures 'this' referencing marker object
 			request = new XMLHttpRequest();
-			request.open("GET", "https://defense-in-derpth.herokuapp.com/redline.json", true);
+			request.open("GET", "https://cryptic-river-88103.herokuapp.com/redline.json", true);
 
 			request.onreadystatechange = function() {
 				if (request.readyState == 4 && request.status == 200) {
