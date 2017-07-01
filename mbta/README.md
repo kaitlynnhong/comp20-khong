@@ -6,3 +6,4 @@ MBTA Lab 10
 https://stackoverflow.com/questions/4057665/google-maps-api-v3-find-nearest-markers - using haversine formula to find closest marker 
 https://stackoverflow.com/questions/5535676/inserting-styled-html-table-inside-infowindow-content - creating an info window table 
 https://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects - sorting array of objects
+https://www.html5rocks.com/en/tutorials/cors/#toc-making-a-cors-request - making a cors request 
