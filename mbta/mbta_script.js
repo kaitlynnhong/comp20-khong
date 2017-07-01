@@ -212,11 +212,6 @@ function red_station_markers()
 
  		google.maps.event.addListener(station_markers, 'click', function() {
 			var theActualMarker = this;		//ensures 'this' referencing marker object
-			var xhr = createCORSRequest('GET', url);
-			if (!xhr) {
-  				throw new Error('CORS not supported');
-			}
-			request = new XMLHttpRequest();
 			request.open("GET", "https://cryptic-river-88103.herokuapp.com/redline.json", true);
 
 			request.onreadystatechange = function() {
@@ -241,21 +236,6 @@ function red_station_markers()
 			request.send();		
 		});
 	}
-
-function createCORSRequest(method, url) {
-	var xhr = new XMLHttpRequest();
-  	if ("withCredentials" in xhr) {
-    	xhr.open(method, url, true);
-  	} 
-  	else if (typeof XDomainRequest != "undefined") {
-   	 	xhr = new XDomainRequest();
-    	xhr.open(method, url);
-  	} 
- 	else {
-    	xhr = null;
-  	}
-  	return xhr;
-}
 
 	/*markers for train positions
 	var train_lat = [], train_lng = [], train_positions = [], train_dest = [];
