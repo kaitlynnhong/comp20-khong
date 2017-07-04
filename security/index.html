@@ -35,7 +35,9 @@
     the hacker just has to modify the url query string to reveal and change the mongo data. the if statement following the loginEntry request only accounts for whether the request is undefined,<br>
     if the hacker were to enter something bypassing that if statement parameter in the login, their malicious statement would be added and sent to the mongo database<br>
     through the else statement </li>
-    
+    <li>Proof of vulnerability: added [$ne] to the query string for login, displayed all mongodb data<br>
+     <img src = "issue1.jpg"></li>
+     <li>Resolution: encode the request for login information, add a better check to the loginEntry after it has been requested to ensure only user's data can be displayed. </li>
   </ul>
   </p>
 
