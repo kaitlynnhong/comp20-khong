@@ -42,6 +42,9 @@
   </p>
 
   <p>Conclusion:</p>
+  <p>One way to avoid the XSS vulnerabilities presented in this app is to avoid inserting html / requesting data directly in the app.<br>
+  Instead, use a DOM node(s) and insert them into the DOM, such as .append(), .prepend(), .before(), .after(), etc. to act as a middle man between the request and the server so that the request remains encoded and is unable to be modified.
+  </p>
   
 </body>
 </html>
