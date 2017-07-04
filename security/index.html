@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+  <title>Security Lab 13</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <h1>Lab 13 Report</h1>
+  <p>Introduction:</p>
+  <p>I was hired as a security consultant to document the security and privacy issues in this app.<br>
+      The app takes in data (latitude, longitude, and login information) from the user and stores it in a mongodb collection.<br>
+      The app's url/checkins.json page displays the logged in user's location (lat and lng) pulled from the mongo database.<br> 
+      The app's homepage url/ displays which users have checked in (entered the login info) and how many times they have done so.</p>
+
+  <p>Methodology:</p>
+  <p>I tested the application for vulnerabilities by modifying the query string in the url (using [$ne]),<br>
+  and by inserting javascript alert scripts throughout the code and in the url (javascript:alert('XXS'), <script>alert('XXS')</script>).<br>
+  I also ran the code locally on my computer during testing by creating a the server-vuln.js and package.json files on my local device.
+  </p>
+
+  <p>Abstract of Findings:</p>
+  <p></p>
+
+  <p>Issues Found:</p>
+  <p></p>
+
+  <p>Conclusion:</p>
+  
+</body>
+</html>
