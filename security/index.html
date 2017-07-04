@@ -16,16 +16,28 @@
       The app's homepage url/ displays which users have checked in (entered the login info) and how many times they have done so.</p>
 
   <p>Methodology:</p>
-  <p>I tested the application for vulnerabilities by modifying the query string in the url (using [$ne]),<br>
+  <p>I tested the application for vulnerabilities using black box testing by modifying the query string in the url (using [$ne]),<br>
   and by inserting javascript alert scripts throughout the code and in the url (javascript:alert('XXS'), <script>alert('XXS')</script>).<br>
   I also ran the code locally on my computer during testing by creating a the server-vuln.js and package.json files on my local device.
   </p>
 
   <p>Abstract of Findings:</p>
-  <p></p>
+  <p>The app is susceptible to Cross site scripting attacks due to high number of user requests that are left unchecked/unprotected. <br>
+  hackers are able to perform SQL injection through the url in the query string to manipulate what is displayed on the clients browser.<br>
+  Because of this, hackers could access and manipulate user login information. hackers could also add junk data to the mongo database.</p>
 
   <p>Issues Found:</p>
-  <p></p>
+  <p>1. data injection<br>
+  <ul>
+    <li>Location: app.get('/checkins.json', function(request, response) { var loginEntry = request.query.login;</li>
+    <li>Severity: high, the hacker simply has to modify the url query string with any command in order to reveal data stored in the mongo database collection</li>
+    <li>Description: in line var loginEntry = request.query.login; - the request for loginEntry is not protected or encoded, or even validated.<br>
+    the hacker just has to modify the url query string to reveal and change the mongo data. the if statement following the loginEntry request only accounts for whether the request is undefined,<br>
+    if the hacker were to enter something bypassing that if statement parameter in the login, their malicious statement would be added and sent to the mongo database<br>
+    through the else statement </li>
+    
+  </ul>
+  </p>
 
   <p>Conclusion:</p>
   
